@@ -16,7 +16,7 @@ function App() {
             date = new Date();
         }
 
-        setDate(date)
+        setDate(date);
     };
 
     const onRegionChange = (event) => {
@@ -33,7 +33,11 @@ function App() {
     const regionSelected = (currentRegion) => {
         // eslint-disable-next-line eqeqeq
         return (regions.length === 1 && regions[0] == currentRegion);
-    }
+    };
+
+    const calculateRegion = (region) => {
+        return LOCATIONS[region][rng % LOCATIONS[region].length];
+    };
 
     return (
         <div>
@@ -51,7 +55,7 @@ function App() {
             <div className={"flex flex-wrap content-evenly justify-center my-8"}>
                 {regions.map(r => (
                   <div key={r} className={"m-3"}>
-                    <Region name={REGION_NAMES[r]} locations={LOCATIONS[r]} rng={rng} />
+                    <Region name={REGION_NAMES[r]} location={calculateRegion(r)} />
                   </div>
                 ))}
             </div>
