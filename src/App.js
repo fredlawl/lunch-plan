@@ -7,7 +7,6 @@ import sr from "seedrandom"
 function App() {
     const [date, setDate] = useState(new Date());
     const nextRng = sr(date.toDateString());
-    const rng = parseInt((''+nextRng()).split('.')[1], 10);
     const [regions, setRegions] = useState(REGIONS);
 
     const onDateChange = (date) => {
@@ -35,6 +34,7 @@ function App() {
     };
 
     const calculateLocation = (region) => {
+        const rng = parseInt((''+nextRng()).split('.')[1], 10);
         return LOCATIONS[region][rng % LOCATIONS[region].length];
     };
 
