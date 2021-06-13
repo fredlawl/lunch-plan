@@ -3,6 +3,7 @@ import {LocationCard} from "./LocationCard";
 import {useState} from "react";
 import DatePicker from 'react-date-picker';
 import sr from "seedrandom"
+import {RegionButton} from "./RegionButton";
 
 function App() {
     const [date, setDate] = useState(new Date());
@@ -46,14 +47,23 @@ function App() {
                     <div className={"flex justify-center"}>
                         <DatePicker value={date} onChange={onDateChange} />
                     </div>
-                    <div className={"mt-8"}>
-                        {REGIONS.map(r => <button key={r} value={r} onClick={onRegionChange} className={(regionSelected(r) ? "bg-gray-700 text-white" : "hover:bg-gray-50") + " py-1 px-4 mx-4 border bg-gray-300 rounded-md outline-none focus:outline-none"}>{REGION_NAMES[r]}</button>)}
+                    <div className={"mt-8 flex flex-wrap"}>
+                        {REGIONS.map(r => (
+                            <div className={"flex-grow md:flex-grow-0 m-2 md:mx-4"}>
+                                <RegionButton
+                                    key={r}
+                                    value={r}
+                                    onClick={onRegionChange}
+                                    selected={regionSelected(r)}
+                                    >{REGION_NAMES[r]}</RegionButton>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
             <div className={"flex flex-wrap content-evenly justify-center my-8"}>
                 {regions.map(r => (
-                  <div key={r} className={"m-3"}>
+                  <div key={r} className={"m-3 flex-grow md:flex-grow-0"}>
                     <LocationCard region={REGION_NAMES[r]} location={calculateLocation(r)} />
                   </div>
                 ))}

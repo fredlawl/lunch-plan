@@ -4,7 +4,7 @@ export const LocationCard = ({region, location}) => {
     };
 
     return (
-        <article className={"shadow-sm w-52 h-full"}>
+        <article className={"shadow-sm md:w-52 h-full w-full"}>
             <header className={"bg-gray-200 py-4"}>
                 <h2 className={"text-center"}>{region}</h2>
             </header>
