@@ -128,7 +128,7 @@ export const LOCATIONS = {
             address: "1710 S Kansas Expy, Springfield, MO 65807",
         },
         {
-            name: "Red’s Giant Hamburg",
+            name: "Red’s Giant Hamburger",
             address: "2301 W Sunshine St, Springfield, MO 65807",
         },
         {
