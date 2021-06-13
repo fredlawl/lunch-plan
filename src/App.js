@@ -1,4 +1,3 @@
-import './App.css';
 import {LOCATIONS, REGION_NAMES, REGIONS} from "./locations";
 import {Region} from "./Region";
 import {useState} from "react";
@@ -35,7 +34,7 @@ function App() {
         return (regions.length === 1 && regions[0] == currentRegion);
     };
 
-    const calculateRegion = (region) => {
+    const calculateLocation = (region) => {
         return LOCATIONS[region][rng % LOCATIONS[region].length];
     };
 
@@ -55,7 +54,7 @@ function App() {
             <div className={"flex flex-wrap content-evenly justify-center my-8"}>
                 {regions.map(r => (
                   <div key={r} className={"m-3"}>
-                    <Region name={REGION_NAMES[r]} location={calculateRegion(r)} />
+                    <Region name={REGION_NAMES[r]} location={calculateLocation(r)} />
                   </div>
                 ))}
             </div>
