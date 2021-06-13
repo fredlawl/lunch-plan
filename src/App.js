@@ -1,5 +1,5 @@
 import {LOCATIONS, REGION_NAMES, REGIONS} from "./locations";
-import {Region} from "./Region";
+import {LocationCard} from "./LocationCard";
 import {useState} from "react";
 import DatePicker from 'react-date-picker';
 import sr from "seedrandom"
@@ -54,7 +54,7 @@ function App() {
             <div className={"flex flex-wrap content-evenly justify-center my-8"}>
                 {regions.map(r => (
                   <div key={r} className={"m-3"}>
-                    <Region name={REGION_NAMES[r]} location={calculateLocation(r)} />
+                    <LocationCard region={REGION_NAMES[r]} location={calculateLocation(r)} />
                   </div>
                 ))}
             </div>
