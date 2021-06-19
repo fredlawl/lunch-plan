@@ -1,21 +1,27 @@
 import {LOCATIONS, REGION_NAMES, REGIONS} from "./locations";
 import {LocationCard} from "./LocationCard";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import DatePicker from 'react-date-picker';
 import sr from "seedrandom"
 import {RegionButton} from "./RegionButton";
+import {useHistory, useLocation} from "react-router";
 
 function App() {
     const [date, setDate] = useState(new Date());
     const nextRng = sr(date.toDateString());
     const [regions, setRegions] = useState(REGIONS);
+    const history = useHistory();
+    const location = useLocation();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const passedDate = parseDate(queryParams.get("date"))
+        setDate(passedDate);
+    }, [location.search, setDate]);
 
     const onDateChange = (date) => {
-        if (typeof date === 'undefined' || date === null) {
-            date = new Date();
-        }
-
-        setDate(date);
+        date = parseDate(date);
+        history.replace("?date=" + date.toDateString())
     };
 
     const onRegionChange = (event) => {
@@ -28,6 +34,14 @@ function App() {
 
         setRegions([REGIONS[targetIndex]]);
     };
+
+    const parseDate = (date) => {
+        if (typeof date === 'undefined' || date === null) {
+            date = new Date();
+        }
+
+        return new Date(date);
+    }
 
     const regionSelected = (currentRegion) => {
         // eslint-disable-next-line eqeqeq
@@ -49,9 +63,8 @@ function App() {
                     </div>
                     <div className={"mt-8 flex flex-wrap"}>
                         {REGIONS.map(r => (
-                            <div className={"flex-grow md:flex-grow-0 m-2 md:mx-4"}>
+                            <div key={r} className={"flex-grow md:flex-grow-0 m-2 md:mx-4"}>
                                 <RegionButton
-                                    key={r}
                                     value={r}
                                     onClick={onRegionChange}
                                     selected={regionSelected(r)}
