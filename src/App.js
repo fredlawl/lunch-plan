@@ -1,10 +1,10 @@
 import {LOCATIONS, REGION_NAMES, REGIONS} from "./locations";
 import {LocationCard} from "./LocationCard";
 import {useEffect, useState} from "react";
-import DatePicker from 'react-date-picker';
 import sr from "seedrandom"
 import {RegionButton} from "./RegionButton";
 import {useHistory, useLocation} from "react-router";
+import {DateNavigation} from "./DateNavigation";
 
 function App() {
     const [date, setDate] = useState(new Date());
@@ -40,7 +40,12 @@ function App() {
             date = new Date();
         }
 
-        return new Date(date);
+        let parsed = Date.parse(date);
+        if (isNaN(parsed)) {
+            return new Date();
+        }
+
+        return new Date(parsed);
     }
 
     const regionSelected = (currentRegion) => {
@@ -59,7 +64,7 @@ function App() {
                 <div>
                     <p className={"text-center text-white text-2xl mb-2"}>{date.toDateString()}</p>
                     <div className={"flex justify-center"}>
-                        <DatePicker value={date} onChange={onDateChange} />
+                        <DateNavigation today={Date.now()} selectedDate={date} onChange={onDateChange} />
                     </div>
                     <div className={"mt-8 flex flex-wrap"}>
                         {REGIONS.map(r => (
