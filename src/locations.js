@@ -102,7 +102,7 @@ export const LOCATIONS = {
             address: "2825 S Glenstone Ave, Springfield, MO 65804",
         },
         {
-            name: "Baffalo Wildwings",
+            name: "Buffalo Wildwings",
             address: "900 E Battlefield Rd, Springfield, MO 65807",
         },
         {
