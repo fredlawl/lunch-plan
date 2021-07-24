@@ -8,8 +8,10 @@ import {DateNavigation} from "./DateNavigation";
 import {formatISO, isValid, parseISO, startOfDay} from "date-fns";
 import {toDate} from "date-fns-tz";
 
+const DEFAULT_TIMEZONE = 'America/Chicago';
+
 const newDate = () => {
-    return toDate(startOfDay(new Date()), {timeZone: 'America/Chicago'});
+    return toDate(startOfDay(new Date()), {timeZone: DEFAULT_TIMEZONE});
 }
 
 function App() {
@@ -40,7 +42,8 @@ function App() {
             date = newDate();
         }
 
-        history.replace("?date=" + encodeURIComponent(formatISO(date, {
+        const convertedDate = toDate(startOfDay(date), {timeZone: DEFAULT_TIMEZONE});
+        history.replace("?date=" + encodeURIComponent(formatISO(convertedDate, {
             representation: 'date'
         })))
     };
@@ -59,7 +62,7 @@ function App() {
     const parseDate = (date) => {
         let parsedDate = parseISO(date);
         if (isValid(parsedDate)) {
-            return parsedDate;
+            return toDate(startOfDay(parsedDate), {timeZone: DEFAULT_TIMEZONE});
         }
         return newDate();
     }
