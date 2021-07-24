@@ -1,31 +1,28 @@
 import DatePicker from "react-date-picker";
-import {Link} from "react-router-dom";
+import {addDays, isAfter} from "date-fns";
 
 export const DateNavigation = (props) => {
     const nextDate = (date) => {
-        return calculateDate(date, +1).toDateString();
+        return addDays(date, 1);
     }
 
     const prevDate = (date) => {
-        let prev = calculateDate(date, -1);
-        if (prev < props.today) {
-            prev = new Date(props.today);
-        }
-
-        return prev.toDateString();
-    }
-
-    const calculateDate = (date, days) => {
-        const copy = new Date(date);
-        copy.setDate(date.getDate() + days);
-        return copy;
+        return addDays(date, -1);
     }
 
     return (
         <>
-            <Link replace={true} to={"?date=" + encodeURIComponent(prevDate(props.selectedDate))} className={"text-4xl inline-block py-2 px-4 " + ((props.selectedDate < props.today) ? "text-gray-500 cursor-not-allowed" : "text-white")}>&lt;</Link>
+            {isAfter(props.selectedDate, props.today) ? (
+                <button onClick={() => {
+                    props.onChange(prevDate(props.selectedDate));
+                }} className={"focus:outline-none text-4xl inline-block py-2 px-4 text-white"}>&lt;</button>
+            ) : (
+                <button disabled={true} className={"focus:outline-none text-gray-500 cursor-not-allowed text-4xl inline-block py-2 px-4"}>&lt;</button>
+            )}
             <DatePicker value={props.selectedDate} onChange={props.onChange} />
-            <Link replace={true} to={"?date=" + encodeURIComponent(nextDate(props.selectedDate))} className={"text-4xl inline-block py-2 px-4 text-white"}>&gt;</Link>
+            <button onClick={() => {
+                props.onChange(nextDate(props.selectedDate));
+            }} className={"focus:outline-none text-4xl inline-block py-2 px-4 text-white"}>&gt;</button>
         </>
     );
-};
+}
